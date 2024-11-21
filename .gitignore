@@ -1,0 +1,20 @@
+# Ignore node_modules directories
+node_modules/
+*/node_modules/
+
+# Ignore log and temporary files
+*.log
+*.tmp
+
+# Ignore environment configuration files
+.env
+
+# Ignore large files that shouldn't be tracked
+large_file.dat
+
+# Ignore build output directories
+*/dist
+
+# Ignore parcel cache directories
+.parcel-cache/
+*/.parcel-cache/
