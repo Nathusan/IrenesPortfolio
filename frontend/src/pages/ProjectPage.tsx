@@ -4,7 +4,7 @@ import { Image, Text, Stack, Group, Center, Grid, Paper, Title, Space, Container
 import '@mantine/core/styles.css';
 import { hyphenateWithSpace } from '../helpers/textHelpers';
 import { PhotoCollage } from '../components/PhotoCollage';
-// import { ColourPalette } from '../components/ColourPalette';
+import { ColourPalette } from '../components/ColourPalette';
 
 interface Brief {
     briefText: string,
@@ -52,7 +52,7 @@ const ProjectPage: React.FC<data>  = (props) => {
                     </Center>
                 </Stack>
             </div>
-            <Image src={props.data.imgUrl} radius='md'/>
+            <Image src={props.data.imgUrl}/>
             <Stack justify="center" gap="md">
                 <Container mt={'50px'} mb={'50px'} fluid  styles={{root: {paddingInline: 0}}}>
                     <Center>
@@ -127,10 +127,10 @@ const ProjectPage: React.FC<data>  = (props) => {
                     </div>
                 </Stack>
             }
+            {
+                props.data.colourPalette && <ColourPalette colours={props.data.colourPalette}/>
+            }
             <Stack className='logos' justify='centre' gap='xs'>
-                <div>
-                    <Title size='md'>Logo Variations</Title>
-                </div>
                 <div>
                     <Grid
                         styles={{
@@ -144,13 +144,14 @@ const ProjectPage: React.FC<data>  = (props) => {
                         gutter="xs"
                     >
                         {
-                            props.data.logos.map((imgPath, index) =>
-                                (<Grid.Col span={4} key={index}>
-                                    <Paper shadow="md" radius='lg' withBorder
-                                    >
-                                        <Image src={imgPath} radius="md"/>
-                                    </Paper>
-                                </Grid.Col>)
+                            props.data.logos.map((imgPath, index) => (
+                                    <Grid.Col span={3} key={index}>
+                                        <Paper shadow="md" radius='lg' withBorder
+                                        >
+                                            <Image src={imgPath} radius="md"/>
+                                        </Paper>
+                                    </Grid.Col>
+                                )
                             )
                         }
                     </Grid>

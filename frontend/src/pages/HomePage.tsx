@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import React from 'react';
 import '../style/main.less';
 import { Grid, Image, Paper } from '@mantine/core';
@@ -121,10 +122,7 @@ const projects: Project[] = [
                   withBorder
                   onClick={() => navigate(project.path, {state: {data: project.data}})}
                 >
-                  <Image
-                    src={project.img}
-                    radius="md"
-                  />
+                  <Image src={project.img} radius="md"/>
                 </Paper>
               </Grid.Col>
             )
