@@ -34,8 +34,7 @@ interface data {
     data : ProjectProps;
 }
 
-
-const ProjectPage: React.FC<data>  = (props) => {
+const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
     return (
         <div className='project-page'>
             <div id='container' className='container'>

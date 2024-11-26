@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import React from 'react';
 import '../style/main.less';
 import { Grid, Image, Paper, Group } from '@mantine/core';
@@ -22,28 +23,23 @@ export default class AboutPage extends React.Component {
               <div id='page-title'>About Me!</div>
             </div>
         </div>
-        <div className='image-grid'>
-          <Grid styles={{inner: {
-            'alignItems': 'center',
-            'display': 'flex',
-            'justifyContent': 'center',
-              }}}>
-              {IMAGES.map((img, index) => (
-                <Grid.Col span={1.2} key={index}>
-                  <Paper
-                    shadow="sm"
-                    radius="md"
-                    withBorder
-                    // onClick={() => handleSelect(url)}
-                  >
-                    <Image
-                      w='3rem'
-                      src={img}
-                    />
-                  </Paper>
-                </Grid.Col>
-              )
-              )}
+        <div className="image-grid">
+          <Grid
+            styles={{
+              inner: {
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "center",
+              },
+            }}
+          >
+            {IMAGES.map((img, index) => (
+              <Grid.Col span={1.2} key={index}>
+                <Paper shadow="sm" radius="md" withBorder>
+                  <Image w="3rem" src={img} />
+                </Paper>
+              </Grid.Col>
+            ))}
           </Grid>
         </div>
         <Group justify='centre' gap='xs' grow wrap="nowrap">

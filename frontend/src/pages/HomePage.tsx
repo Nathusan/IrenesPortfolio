@@ -125,8 +125,7 @@ const projects: Project[] = [
                   <Image src={project.img} radius="md"/>
                 </Paper>
               </Grid.Col>
-            )
-            )}
+            ))}
           </Grid>
         </div>
       </div>

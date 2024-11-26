@@ -19,8 +19,8 @@ export default function Homebar(): JSX.Element {
         </div>
         <Group className='home-bar'>
           <Button
-          variant="transparent"
-          color="rgba(0, 0, 0, 1)"
+            variant="transparent"
+            color="rgba(0, 0, 0, 1)"
             onClick={() => navigate(routes[RoutePage.HomePage].path)}
           >
             Home
