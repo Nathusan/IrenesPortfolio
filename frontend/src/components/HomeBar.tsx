@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import * as React from 'react';
 import {
   Button,
@@ -8,7 +9,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { RoutePage, routes } from '../../routes';
 
-export default function Homebar(): JSX.Element {
+export default function Homebar(): React.ReactElement {
   const navigate = useNavigate();
 
   return (
@@ -19,8 +20,8 @@ export default function Homebar(): JSX.Element {
         </div>
         <Group className='home-bar'>
           <Button
-          variant="transparent"
-          color="rgba(0, 0, 0, 1)"
+            variant="transparent"
+            color="rgba(0, 0, 0, 1)"
             onClick={() => navigate(routes[RoutePage.HomePage].path)}
           >
             Home

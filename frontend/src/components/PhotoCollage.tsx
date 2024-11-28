@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Container, Grid,  } from '@mantine/core';
+import { Image, Container, Grid  } from '@mantine/core';
 
 interface PhotoCollageProps {
     images: string[],

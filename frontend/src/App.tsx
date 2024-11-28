@@ -1,12 +1,18 @@
-// App.tsx
 import React from 'react';
 import { RouterProvider } from 'react-router-dom';
-import { router } from '../routes'; // Import the router you created
-import { MantineProvider } from '@mantine/core';
+import { router } from '../routes';
+import { createTheme, MantineProvider } from '@mantine/core';
+import '@fontsource/inter';
 
-export const App = () => {
+export const App: () => React.ReactElement = () => {
+
+  const theme = createTheme({
+    fontFamily: 'Inter, Arial, sans-serif', // Set the primary font
+  });
+
+
   return (
-    <MantineProvider>
+    <MantineProvider theme={theme}>
         <RouterProvider router={router} />
     </MantineProvider>
   );

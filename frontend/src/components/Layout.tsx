@@ -3,15 +3,14 @@ import { Outlet } from "react-router";
 import Homebar from "../components/HomeBar";
 import Footer from "./Footer";
 
-
 export default class Layout extends React.Component {
-    public render() {
+    public render(): React.ReactElement {
         return (
             <>
                 <Homebar/>
-                <div className="content">
-                    <Outlet/>
-                </div>
+                    <div className="content">
+                        <Outlet/>
+                    </div>
                 <Footer/>
             </>
         )
