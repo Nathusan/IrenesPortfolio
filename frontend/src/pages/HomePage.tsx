@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import React from 'react';
 import '../style/main.less';
@@ -30,22 +31,19 @@ const projects: Project[] = [
           moodBoardDescription: 'I have created a moodboard that  embraces a playful rubber hose style with a retro colour palette, which not only represents the pickle range but also ties together the overall aesthetic.',
           moodBoardImg:  [],
         },
-        logos: [   require('../img/drink.png'),
+        logos: [
           require('../img/drink.png'),
-          require('../img/drink.png'),
-          require('../img/drink.png'),
-          require('../img/drink.png'),
-        ],
-        pattern: [
           require('../img/drink.png'),
           require('../img/drink.png'),
           require('../img/drink.png'),
           require('../img/drink.png'),
         ],
-        heroShots: [   require('../img/drink.png'),
+        heroShots: [
           require('../img/drink.png'),
           require('../img/drink.png'),
-          require('../img/drink.png'),]
+          require('../img/drink.png'),
+          require('../img/drink.png'),
+        ]
     }
   },
   {
@@ -73,30 +71,28 @@ const projects: Project[] = [
           ],
         },
         colourPalette: ['#E3D6CB','#C7AC9E','#F4EAE7','#C2967C'],
+        bannerLogo: require('../img/ஐcare/banners/care-logo-banner.png'),
+        logoBackgroundColour: "#E3D6CB",
         logos: [
-          require('../img/drink.png'),
-          require('../img/drink.png'),
-          require('../img/drink.png'),
-          require('../img/drink.png'),
-          require('../img/drink.png'),
+          require('../img/ஐcare/logos/eye_serum_logo_2.png'),
+          require('../img/ஐcare/logos/eye_serum_logo_1.png'),
+          require('../img/ஐcare/logos/eye_serum_logo_3.png'),
         ],
-        pattern: [
-          require('../img/drink.png'),
-          require('../img/drink.png'),
-          require('../img/drink.png'),
-          require('../img/drink.png'),
-        ],
-        heroShots: [   require('../img/drink.png'),
-          require('../img/drink.png'),
-          require('../img/drink.png'),
-          require('../img/drink.png'),]
+        logoExplanation: 'The name is inspired by the Tamil letter "ஐ" (pronounced "I"), symbolising the commitment to nurturing and protecting your eyes. Pronounced as "eye care," it reflects both the dedication to skincare and the values it cherishes.Rooted in Tamil culture, ஐ represents the elegance and wisdom of an ancient script. By incorporating this unique letter into the brand, it celebrates diversity and cultural fusion.',
+        heroShots: [
+          require('../img/ஐcare/heroshots/box_dieline.png'),
+          require('../img/ஐcare/heroshots/Component_1.png'),
+          require('../img/ஐcare/heroshots/Component_2.png'),
+          require('../img/ஐcare/heroshots/dropperBottleMockup.png'),
+          require('../img/ஐcare/heroshots/logoBg.png'),
+          require('../img/ஐcare/heroshots/MockupBottleBox.png'),
+        ]
     }
-  },
+  }
 ]
 
  const HomePage: React.FC = () => {
   const navigate = useNavigate();
-
     return (
       <div className='home-page'>
         <div id='container' className='container'>

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import * as React from 'react';
 import {
   Button,
@@ -8,7 +9,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { RoutePage, routes } from '../../routes';
 
-export default function Homebar(): JSX.Element {
+export default function Homebar(): React.ReactElement {
   const navigate = useNavigate();
 
   return (

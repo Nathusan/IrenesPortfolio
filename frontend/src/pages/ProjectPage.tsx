@@ -25,8 +25,10 @@ export interface ProjectProps {
     imgUrl: string;
     moodBoard: MoodBoard;
     colourPalette?: string[],
+    bannerLogo?: string,
     logos: string[]
-    pattern?: string[];
+    logoBackgroundColour?: string,
+    logoExplanation?: string,
     heroShots?: string[];
 }
 
@@ -66,21 +68,21 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                 <Group justify="center" gap="xl" grow align='none'>
                     <Stack>
                         <Container fluid styles={{root: {paddingInline: 0}}}>
-                            <Title size='md'>Task</Title>
+                            <Title align="center" size='md'>Task</Title>
                             <Space h='md'/>
-                            <Text>{props.data.brief.task}</Text>
+                            <Text align="center">{props.data.brief.task}</Text>
                         </Container>
                     </Stack>
                     <Stack>
                         <Container fluid styles={{root: {paddingInline: 0}}}>
-                            <Title size='md'>Duration</Title>
+                            <Title align="center" size='md'>Duration</Title>
                             <Space h='md'/>
-                            <Text>{props.data.brief.duration}</Text>
+                            <Text align="center">{props.data.brief.duration}</Text>
                         </Container>
                     </Stack>
                     <Stack>
                         <Container fluid styles={{root: {paddingInline: 0}}}>
-                            <Title size='md'>Tools</Title>
+                            <Title align="center" size='md'>Tools</Title>
                             <Space h='md'/>
                             {props.data.brief.tools.map((d, index) => (<Chip key={index} defaultChecked >{d}</Chip>) )}
                         </Container>
@@ -126,79 +128,39 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                     </div>
                 </Stack>
             }
-            {
-                props.data.colourPalette && <ColourPalette colours={props.data.colourPalette}/>
-            }
+            {props.data.colourPalette && <ColourPalette colours={props.data.colourPalette}/>}
+            <Image src={props.data.bannerLogo}/>
             <Stack className='logos' justify='centre' gap='xs'>
-                <div>
-                    <Grid
-                        styles={{
-                            inner: {
-                            alignItems: 'center',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            },
-                        }}
-                        grow
-                        gutter="xs"
-                    >
-                        {
-                            props.data.logos.map((imgPath, index) => (
-                                    <Grid.Col span={3} key={index}>
-                                        <Paper shadow="md" radius='lg' withBorder
-                                        >
-                                            <Image src={imgPath} radius="md"/>
-                                        </Paper>
-                                    </Grid.Col>
-                                )
+                <Grid
+                    styles={{
+                        inner: {
+                        alignItems: 'center',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        },
+                    }}
+                    grow
+                    gutter="xs"
+                    style={{backgroundColor: `${props.data.logoBackgroundColour}`}}
+                >
+                    {
+                        props.data.logos.map((imgPath, index) => (
+                                <Grid.Col span={3} key={index}>
+                                    <Image src={imgPath} radius="md"/>
+                                </Grid.Col>
                             )
-                        }
-                    </Grid>
-                </div>
+                        )
+                    }
+                </Grid>
+                <Text mt={10} mb={10}>{props.data.logoExplanation}</Text>
             </Stack>
-            { props.data.pattern.length &&
-                <Stack className='patterns' justify='centre' gap='xs'>
-                    <div>
-                        <Title size='md'>Logo Variations</Title>
-                    </div>
-                    <div>
-                        <Grid
-                            styles={{
-                                inner: {
-                                alignItems: 'center',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                },
-                            }}
-                            grow
-                            gutter="xs"
-                        >
-                            {
-                                props.data.pattern.map((imgPath, index) =>
-                                    (<Grid.Col span={4} key={index}>
-                                        <Paper shadow="md" radius='lg' withBorder
-                                        >
-                                            <Image src={imgPath} radius="md"/>
-                                        </Paper>
-                                    </Grid.Col>)
-                                )
-                            }
-                        </Grid>
-                    </div>
-                </Stack>
-            }
             {props.data.heroShots &&
-                <Stack className='hero-shots' justify='centre' gap='xs'>
+                <Stack className='hero-shots' justify='centre' gap='0'>
                     <div>
-                        <Title size='md'>Hero Shots</Title>
-                    </div>
-                    <div>
-                        <Stack>
+                        <Stack gap='0'>
                             {
                                 props.data.heroShots.map((imgPath, index) =>
-                                    <Paper shadow="md" radius='lg' key={index} withBorder>
-                                        <Image src={imgPath} radius="md"/>
-                                    </Paper>
+                                    <Image src={imgPath} key={index}/>
                                 )
                             }
                         </Stack>
