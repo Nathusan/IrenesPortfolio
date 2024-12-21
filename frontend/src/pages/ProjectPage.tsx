@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../style/main.less';
-import { Image, Text, Stack, Group, Center, Grid, Paper, Title, Space, Container, Chip } from '@mantine/core';
+import { Image, Text, Stack, Group, Center, Grid, Title, Space, Container, Chip } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { hyphenateWithSpace } from '../helpers/textHelpers';
 import { PhotoCollage } from '../components/PhotoCollage';
 import { ColourPalette } from '../components/ColourPalette';
+import { fetchSubfoldersWithImages } from '../helpers/imageHelpers';
 
 interface Brief {
     briefText: string,
@@ -15,21 +16,23 @@ interface Brief {
 
 interface MoodBoard {
     moodBoardDescription?: string,
-    moodBoardImg: string[],
 }
 
 export interface ProjectProps {
     projectName: string;
     directive: string[];
     brief: Brief;
-    imgUrl: string;
     moodBoard: MoodBoard;
     colourPalette?: string[],
-    bannerLogo?: string,
-    logos: string[]
     logoBackgroundColour?: string,
     logoExplanation?: string,
-    heroShots?: string[];
+}
+
+enum ImageDirectory {
+    banners = 'banners',
+    moodBoard = 'moodBoard',
+    heroShots = "heroShots",
+    logos = 'logos'
 }
 
 interface data {
@@ -37,6 +40,26 @@ interface data {
 }
 
 const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
+    const [projectImages, setProjectImages] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+
+            const data = await fetchSubfoldersWithImages(`/projects/${props.data.projectName}/`);
+            setProjectImages(data);
+
+            } catch (error) {
+                console.error("Error fetching subfolders or images:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchData();
+    }, [setProjectImages]);
+
     return (
         <div className='project-page'>
             <div id='container' className='container'>
@@ -53,7 +76,7 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                     </Center>
                 </Stack>
             </div>
-            <Image src={props.data.imgUrl}/>
+            {!loading && <Image src={projectImages[ImageDirectory.banners]['page_banner.png']?? ''}/>}
             <Stack justify="center" gap="md">
                 <Container mt={'50px'} mb={'50px'} fluid  styles={{root: {paddingInline: 0}}}>
                     <Center>
@@ -61,28 +84,28 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                             Brief
                         </Title>
                     </Center>
-                    <Text align="center">
+                    <Text styles={{root: {textAlign: "center"}}}>
                         {props.data.brief.briefText}
                     </Text>
                 </Container>
                 <Group justify="center" gap="xl" grow align='none'>
                     <Stack>
                         <Container fluid styles={{root: {paddingInline: 0}}}>
-                            <Title align="center" size='md'>Task</Title>
+                            <Title styles={{root: {textAlign: 'center'}}} size='md'>Task</Title>
                             <Space h='md'/>
-                            <Text align="center">{props.data.brief.task}</Text>
+                            <Text styles={{root: {textAlign: "center"}}}>{props.data.brief.task}</Text>
                         </Container>
                     </Stack>
                     <Stack>
                         <Container fluid styles={{root: {paddingInline: 0}}}>
-                            <Title align="center" size='md'>Duration</Title>
+                            <Title styles={{root: {textAlign: "center"}}} size='md'>Duration</Title>
                             <Space h='md'/>
-                            <Text align="center">{props.data.brief.duration}</Text>
+                            <Text styles={{root: {textAlign: "center"}}}>{props.data.brief.duration}</Text>
                         </Container>
                     </Stack>
                     <Stack>
                         <Container fluid styles={{root: {paddingInline: 0}}}>
-                            <Title align="center" size='md'>Tools</Title>
+                            <Title styles={{root: {textAlign: "center"}}} size='md'>Tools</Title>
                             <Space h='md'/>
                             {props.data.brief.tools.map((d, index) => (<Chip key={index} defaultChecked >{d}</Chip>) )}
                         </Container>
@@ -91,11 +114,11 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
             </Stack>
             <Space h="xl" />
             {
-                props.data.moodBoard.moodBoardDescription &&
+                props.data.moodBoard?.moodBoardDescription &&
                 <Group justify='centre' gap='xs' grow wrap="nowrap" className='mood-board' mt="xl" align='none'>
                     <Container fluid w='4rem' styles={{root: {paddingInline: 0}}}>
                         <Title size='md'>Mood Board</Title>
-                        <Text>{props.data.moodBoard.moodBoardDescription}</Text>
+                        <Text>{props.data?.moodBoard.moodBoardDescription}</Text>
                     </Container>
                     <Container styles={{root: {paddingInline: 0}}}>
                         <Grid
@@ -111,25 +134,25 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                         >
                         </Grid>
                     </Container>
-                    <PhotoCollage images={ props.data.moodBoard.moodBoardImg}/>
+                    {!loading && <PhotoCollage images={Object.values(projectImages[ImageDirectory.moodBoard])}/>}
                 </Group>
             }
             {
-                !props.data.moodBoard.moodBoardDescription &&
+                !props.data?.moodBoard.moodBoardDescription &&
                 <Stack justify='centre' gap='xs'>
                     <div>
-                        <Text>{props.data.moodBoard.moodBoardDescription}</Text>
+                        <Text>{props.data?.moodBoard.moodBoardDescription}</Text>
                     </div>
                     <Space/>
                     <div>
                         <Grid gutter="xs">
-                            <PhotoCollage images={ props.data.moodBoard.moodBoardImg}/>
+                          {!loading &&  <PhotoCollage images={ Object.values(projectImages[ImageDirectory.moodBoard])}/>}
                         </Grid>
                     </div>
                 </Stack>
             }
             {props.data.colourPalette && <ColourPalette colours={props.data.colourPalette}/>}
-            <Image src={props.data.bannerLogo}/>
+            {!loading && <Image src={projectImages[ImageDirectory.banners]['logo-banner.png']}/>}
             <Stack className='logos' justify='centre' gap='xs'>
                 <Grid
                     styles={{
@@ -143,23 +166,22 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                     gutter="xs"
                     style={{backgroundColor: `${props.data.logoBackgroundColour}`}}
                 >
-                    {
-                        props.data.logos.map((imgPath, index) => (
-                                <Grid.Col span={3} key={index}>
-                                    <Image src={imgPath} radius="md"/>
-                                </Grid.Col>
-                            )
-                        )
+
+                    { !loading && projectImages[ImageDirectory.logos] &&
+                     Object.values(projectImages[ImageDirectory.logos]).sort().map((imgPath, index) =>
+                        (<Grid.Col span={3} key={index}>
+                            <Image src={imgPath} key={index}/>
+                        </Grid.Col>))
                     }
                 </Grid>
                 <Text mt={10} mb={10}>{props.data.logoExplanation}</Text>
             </Stack>
-            {props.data.heroShots &&
+            {projectImages[ImageDirectory.heroShots] &&
                 <Stack className='hero-shots' justify='centre' gap='0'>
                     <div>
                         <Stack gap='0'>
                             {
-                                props.data.heroShots.map((imgPath, index) =>
+                                Object.values(projectImages[ImageDirectory.heroShots]).map((imgPath, index) =>
                                     <Image src={imgPath} key={index}/>
                                 )
                             }
