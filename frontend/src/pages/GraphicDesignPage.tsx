@@ -23,11 +23,6 @@ export default class GraphicDesignPage extends React.Component {
             <div id='page-title'>Graphic Design Projects</div>
           </div>
         </div>
-        <div id='about' className='containers'>
-          <p>
-            Hi! I’m an aspiring Graphic Designer with a dash of User-Centric design flair paired alongside a foundation in Product Design.
-          </p>
-        </div>
         <div className='image-grid'>
           <Grid grow>
             {IMAGES.map((imgUrl, index) => (

@@ -3,7 +3,6 @@ import * as React from 'react';
 import {
   Button,
   Group,
-  MantineProvider,
   Image
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +12,6 @@ export default function Homebar(): React.ReactElement {
   const navigate = useNavigate();
 
   return (
-    <MantineProvider>
       <Group className="home-bar">
         <div className='logo'>
           <Image w='50%' src={require('../style/logo.png')}/>
@@ -49,6 +47,5 @@ export default function Homebar(): React.ReactElement {
           </Button>
         </Group>
       </Group>
-    </MantineProvider>
   );
 }
