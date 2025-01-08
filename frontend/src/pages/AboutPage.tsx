@@ -50,21 +50,22 @@ const AboutPage: React.FC =() => {
         >
           {!loading &&  Object.values(icons['icons']).map((img, index) => (
             <Grid.Col span={1.2} key={index}>
-                <Image w="3rem" src={img} className='shaking-icons'/>
+                <Image styles={{root:{ scale: '70%'}}} src={img} className='shaking-icons'/>
             </Grid.Col>
           ))}
         </Grid>
       </Container>
       <Group justify='centre' gap='xs' grow wrap="nowrap">
         {!loading && <Image className='containers' h='auto' w={'auto'} src={dp} />}
-        <div id='about' className='containers'>
+        <Container>
           <p>
-            Hey I’m Irene, an aspiring Graphic Designer based in London. I have a BA in Product and Industrial Design and I’m all about creating designs that make people smile and connect - whether it’s for a brand overhaul or a small creative project,  I aim to make a meaningful impact while learning something new along the way.
-            I have a soft spot for illustrations, and as a proud South Asian, I’m passionate about making sure my work reflects inclusivity and representation.
-            In my process, I draw inspiration from things around me -whether it’s something outside or browsing online - and channel it into fresh, imaginative concepts that fit each project’s unique goals.
+            Hey I’m Irene, an aspiring Graphic Designer based in London. I have a BA in Product and Industrial Design and I’m all about creating designs that make people smile and connect - whether it’s for a brand overhaul or a small creative project,
+            I aim to make a meaningful impact wh  ile learning something new along the way.<br /> <br />
+            I have a soft spot for illustrations, and as a proud South Asian, I’m passionate about making sure my work reflects inclusivity and representation.<br /><br />
+            In my process, I draw inspiration from things around me -whether it’s something outside or browsing online - and channel it into fresh, imaginative concepts that fit each project’s unique goals.<br /><br />
             When I’m not designing, you’ll probably find me reading, climbing, sketching in my notebook where I aim to sketch daily. Oh, and I have a serious sweet tooth for desserts!
           </p>
-        </div>
+        </Container>
       </Group>
     </div>
   );
