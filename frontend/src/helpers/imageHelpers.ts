@@ -1,7 +1,7 @@
 import firebase from '../components/firebase';
 
 const storage = firebase.getStorage(firebase.app);
-console.log(storage)
+
 export async function fetchImagesFromPath(folderPath: string): Promise<string[]> {
     const folderRef = firebase.ref(storage, folderPath);
 

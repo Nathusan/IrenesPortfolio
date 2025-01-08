@@ -35,6 +35,12 @@ enum ImageDirectory {
     logos = 'logos'
 }
 
+enum Banner {
+    logo ='logo_banner.png',
+    page = 'page_banner.png',
+    typoGraphy = "typoGraphy.png"
+}
+
 interface data {
     data : ProjectProps;
 }
@@ -76,7 +82,13 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                     </Center>
                 </Stack>
             </div>
-            {!loading && <Image src={projectImages[ImageDirectory.banners]['page_banner.png']?? ''}/>}
+            {!loading && <Image src={projectImages[ImageDirectory.banners][Banner.page]?? ''}/>}
+            {!loading && projectImages[ImageDirectory.banners][Banner.typoGraphy] &&
+                <Stack  mt={'50px'} mb={'50px'}  justify="center" gap={'md'}>
+                    <Title size={'xl'}>TypoGraphy</Title>
+                    {!loading && <Image src={projectImages[ImageDirectory.banners][Banner.typoGraphy]?? ''}/>}
+                </Stack>
+            }
             <Stack justify="center" gap="md">
                 <Container mt={'50px'} mb={'50px'} fluid  styles={{root: {paddingInline: 0}}}>
                     <Center>
@@ -152,7 +164,7 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                 </Stack>
             }
             {props.data.colourPalette && <ColourPalette colours={props.data.colourPalette}/>}
-            {!loading && <Image src={projectImages[ImageDirectory.banners]['logo-banner.png']}/>}
+            {!loading && <Image src={projectImages[ImageDirectory.banners][Banner.logo]}/>}
             <Stack className='logos' justify='centre' gap='xs'>
                 <Grid
                     styles={{

@@ -212,6 +212,8 @@ section::after {
     background-color: #ffffff;
     z-index: 999;
     padding: 1rem;
+    position: sticky;
+    top: 0;
 
     .logo {
         margin: 1rem;
@@ -574,3 +576,17 @@ section::after {
         flex-direction: column;
     }
 }
+
+.shaking-icons:hover {
+    animation: shake 0.5s;
+
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(5px, 5px) rotate(5deg); }
+    50% { transform: translate(0, 0) rotate(0eg); }
+    75% { transform: translate(-5px, 5px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }

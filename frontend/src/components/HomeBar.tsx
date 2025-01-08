@@ -16,7 +16,7 @@ export default function Homebar(): React.ReactElement {
     <MantineProvider>
       <Group className="home-bar">
         <div className='logo'>
-          <Image w='50%' src={require('../img/logo.png')}/>
+          <Image w='50%' src={require('../style/logo.png')}/>
         </div>
         <Group className='home-bar'>
           <Button
