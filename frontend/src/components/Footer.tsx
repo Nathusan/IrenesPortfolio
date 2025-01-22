@@ -8,7 +8,7 @@ import '@mantine/core/styles.css';
 export default class Footer extends React.Component {
     public render() {
         return (
-          <div className='footer'>
+          <footer className='footer'>
             <div className='footer-container'>
               <p>Find me here!</p>
               <div
@@ -28,7 +28,7 @@ export default class Footer extends React.Component {
                 <div>LinkedIn</div>
               </div>
             </div>
-          </div>
+          </footer>
       )
     }
 }

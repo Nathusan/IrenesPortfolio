@@ -28,18 +28,16 @@ body {
     background-image:
       linear-gradient(to right, rgba(128, 128, 128, 0.092) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(128, 128, 128, 0.092) 1px, transparent 1px);
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+    min-height: 100%;
 }
 
 html {
     height: 100%;
     overflow: hidden;
-    width: 100%;
-}
-
-body {
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
     width: 100%;
 }
 
@@ -334,6 +332,9 @@ section::after {
     left: 0;
     color: white;
     text-align: center;
+    clear: both;
+    position: relative;
+    height: 200px;
 
     .footer-container {
         margin-left: auto;
@@ -443,7 +444,7 @@ section::after {
 
 .content {
     margin: 0 auto;
-    width: 70%;
+    width: 80%;
     margin: auto;
     padding-right: 1rem;
     padding-left: 1rem;
@@ -595,4 +596,32 @@ section::after {
     50% { transform: translate(0, 0) rotate(0eg); }
     75% { transform: translate(-5px, 5px) rotate(-5deg); }
     100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+  .scroll-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .scroll-content {
+    display: flex;
+    width: 200%; /* Double the width to fit both images */
+    animation: scroll-left 30s linear infinite;
+  }
+
+  .scroll-content img {
+    flex-shrink: 0;
+    width: 50%; /* Each image takes up 50% of the scroll-content width */
+    height: 50%;
+  }
+
+  /* Keyframes to move the images from left to right */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%); /* Move the container by half the width */
+    }
   }

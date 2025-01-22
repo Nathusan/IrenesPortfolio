@@ -14,7 +14,7 @@ export default function Homebar(): React.ReactElement {
   return (
       <Group className="home-bar">
         <div className='logo'>
-          <Image w='50%' src={require('../style/logo.png')}/>
+          <Image w='50%' src={require('../style/logos/logo.png')}/>
         </div>
         <Group className='home-bar'>
           <Button

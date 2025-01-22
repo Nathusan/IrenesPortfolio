@@ -8,44 +8,88 @@ import { ProjectProps } from './ProjectPage';
 import { useNavigate } from 'react-router-dom';
 import { fetchSubfoldersWithImages } from '../helpers/imageHelpers';
 
-interface Project {
+interface ProjectData {
   path?: string,
   data: ProjectProps
 }
 
-const projects: Project[] = [
+enum Project {
+  extra = 'Extra',
+  inAPickle = 'In A Pickle',
+  gotAChew = 'Got a Chew',
+  naiqua = 'Naiqua',
+  eyeCare = 'ஐcare',
+}
+
+export enum ProjectTools {
+  AdobeIllustrator = 'Adobe Illustrator',
+  AdobePhotoShop = 'Adobe Photoshop',
+  AdobeInDesign = 'Adobe Indesign',
+}
+
+const projects: ProjectData[] = [
   {
     path: "/project-page",
     data: {
-        projectName: 'In a Pickle',
+        projectName: Project.inAPickle,
         directive: ['Branding' ,'Packaging Design','Passion Project'],
         brief: {
           briefText: 'In A Pickle sell fun flavoured pickles! They’re expanding their pickle jar range with some exciting new flavours and are looking for a complete overhaul of their branding & packaging.',
           task: 'Design an engaging visual identity and create packaging designs',
           duration: '1 week',
-          tools: ['Adobe Illustrator', 'Photoshop'],
+          tools: [ProjectTools.AdobeIllustrator, ProjectTools.AdobePhotoShop],
         },
         moodBoard: {
-          moodBoardDescription: 'I have created a moodboard that  embraces a playful rubber hose style with a retro colour palette, which not only represents the pickle range but also ties together the overall aesthetic.',
         },
+        logoBackgroundColour: "#E3D6CB",
     }
   },
   {
     path: "/project-page",
     data: {
+        projectName: Project.extra,
+        directive: ['Rebranding' ,'Packaging Design','Brief Challenge'],
+        brief: {
+          briefText: 'Rebrand Extra’s logo to resonate with a younger, vibrant audience. Extra is looking to refresh its visual identity with a modern, fun and youthful approach, incorporating soft pastel colours.',
+          task: 'Create a rebrand of their logo and packaging design',
+          duration: '1 week',
+          tools: [ProjectTools.AdobeIllustrator, ProjectTools.AdobePhotoShop, ProjectTools.AdobeInDesign],
+        },
+        typography: true,
+        collage: true,
+    }
+  },
+  {
+    path: "/project-page",
+    data: {
+        projectName: Project.naiqua,
+        directive: ['Branding' ,'Packaging Design','Passion Project'],
+        brief: {
+          briefText: 'Design a bright and bold sparkling water brand, create a brand identity and the packaging for it.',
+          task: 'Design a visual identity and other deliverables',
+          duration: '1 week',
+          tools: [ProjectTools.AdobeIllustrator, ProjectTools.AdobePhotoShop],
+        },
+        typography: true,
+    }
+  },
+  {
+    path: "/project-page",
+    data: {
+        collage: true,
         projectName: 'ஐcare',
         directive: ['Brand Identity ','Packaging Design','Passion Project'],
         brief: {
           briefText: 'Create a visual identity for a new eye serum brand. The logo should convey elegance, appealing to a modern audience. The identity must communicate rejuvenation and self-care, resonating with consumers who value beauty and integrity in skincare.',
           task: 'Design the logo, packaging design and other relevant deliverables',
           duration: '1 week',
-          tools: ['Adobe Illustrator', 'Photoshop'],
+          tools: [ProjectTools.AdobeIllustrator, ProjectTools.AdobePhotoShop],
         },
         moodBoard: {
         },
         colourPalette: ['#E3D6CB','#C7AC9E','#F4EAE7','#C2967C'],
         logoBackgroundColour: "#E3D6CB",
-        logoExplanation: 'The name is inspired by the Tamil letter "ஐ" (pronounced "I"), symbolising the commitment to nurturing and protecting your eyes. Pronounced as "eye care," it reflects both the dedication to skincare and the values it cherishes.Rooted in Tamil culture, ஐ represents the elegance and wisdom of an ancient script. By incorporating this unique letter into the brand, it celebrates diversity and cultural fusion.',
+        logoExplanation: 'The name is inspired by the Tamil letter "ஐ" (pronounced "I"), symbolising the commitment to nurturing and protecting your eyes. Pronounced as "eye care," it reflects both the dedication to skincare and the values it cherishes.Rooted in Tamil culture, ஐ represents the elegance and wisdom of an ancient script. By incorporating this unique letter into the brand, it celebrates diversity and cultural fusion.',
 
     }
   }

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import '../style/main.less';
-import { Image, Text, Stack, Group, Center, Grid, Title, Space, Container, Chip } from '@mantine/core';
+import { Image, Text, Stack, Group, Center, Grid, Title, Space, Container } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { hyphenateWithSpace } from '../helpers/textHelpers';
 import { PhotoCollage } from '../components/PhotoCollage';
 import { ColourPalette } from '../components/ColourPalette';
 import { fetchSubfoldersWithImages } from '../helpers/imageHelpers';
+import InfiniteScrollImage from '../components/scrollImage';
+import { ProjectTools } from './HomePage';
 
 interface Brief {
     briefText: string,
@@ -22,23 +24,35 @@ export interface ProjectProps {
     projectName: string;
     directive: string[];
     brief: Brief;
-    moodBoard: MoodBoard;
+    moodBoard?: MoodBoard;
     colourPalette?: string[],
     logoBackgroundColour?: string,
     logoExplanation?: string,
+    typography?: boolean,
+    collage?: boolean,
 }
 
 enum ImageDirectory {
     banners = 'banners',
     moodBoard = 'moodBoard',
     heroShots = "heroShots",
-    logos = 'logos'
+    logos = 'logos',
+    typography = 'typography',
+    tools = 'tools',
 }
 
 enum Banner {
     logo ='logo_banner.png',
+    subLogo ='sub_logo_banner.png',
     page = 'page_banner.png',
-    typoGraphy = "typoGraphy.png"
+    typoGraphy = "typoGraphy.png",
+    moodBoard = 'mood_board_banner.png',
+}
+
+const TOOLS_MAPPING  = {
+    [ProjectTools.AdobeIllustrator]:'adobe_illustrator.png',
+    [ProjectTools.AdobeInDesign]: 'adobe_indesign.png',
+    [ProjectTools.AdobePhotoShop] : 'adobe_photoshop.png',
 }
 
 interface data {
@@ -82,17 +96,11 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                     </Center>
                 </Stack>
             </div>
-            {!loading && <Image src={projectImages[ImageDirectory.banners][Banner.page]?? ''}/>}
-            {!loading && projectImages[ImageDirectory.banners][Banner.typoGraphy] &&
-                <Stack  mt={'50px'} mb={'50px'}  justify="center" gap={'md'}>
-                    <Title size={'xl'}>TypoGraphy</Title>
-                    {!loading && <Image src={projectImages[ImageDirectory.banners][Banner.typoGraphy]?? ''}/>}
-                </Stack>
-            }
+            {!loading && !props.data.collage && <Image src={projectImages[ImageDirectory.banners][Banner.page] ?? ''}/>}
             <Stack justify="center" gap="md">
                 <Container mt={'50px'} mb={'50px'} fluid  styles={{root: {paddingInline: 0}}}>
                     <Center>
-                        <Title size='xl'>
+                        <Title size='xl' mb={'1rem'}>
                             Brief
                         </Title>
                     </Center>
@@ -119,49 +127,68 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                         <Container fluid styles={{root: {paddingInline: 0}}}>
                             <Title styles={{root: {textAlign: "center"}}} size='md'>Tools</Title>
                             <Space h='md'/>
-                            {props.data.brief.tools.map((d, index) => (<Chip key={index} defaultChecked >{d}</Chip>) )}
+                            <Group>
+                                {props.data.brief.tools.map((logo: string, index: number) => {
+                                    return (
+                                        <div key={index}>
+                                            {!loading && projectImages[ImageDirectory.tools]&& <Image h={'3rem'} src={projectImages[ImageDirectory.tools][TOOLS_MAPPING[logo]]} key={index} />}
+                                        </div>
+                                    )
+                                })}
+                            </Group>
                         </Container>
                     </Stack>
                 </Group>
             </Stack>
-            <Space h="xl" />
-            {
-                props.data.moodBoard?.moodBoardDescription &&
-                <Group justify='centre' gap='xs' grow wrap="nowrap" className='mood-board' mt="xl" align='none'>
-                    <Container fluid w='4rem' styles={{root: {paddingInline: 0}}}>
-                        <Title size='md'>Mood Board</Title>
-                        <Text>{props.data?.moodBoard.moodBoardDescription}</Text>
-                    </Container>
-                    <Container styles={{root: {paddingInline: 0}}}>
-                        <Grid
-                            styles={{
-                                inner: {
-                                alignItems: 'center',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                },
-                            }}
-                            grow
-                            gutter="xs"
-                        >
-                        </Grid>
-                    </Container>
-                    {!loading && <PhotoCollage images={Object.values(projectImages[ImageDirectory.moodBoard])}/>}
-                </Group>
-            }
-            {
-                !props.data?.moodBoard.moodBoardDescription &&
-                <Stack justify='centre' gap='xs'>
-                    <div>
-                        <Text>{props.data?.moodBoard.moodBoardDescription}</Text>
-                    </div>
-                    <Space/>
-                    <div>
-                        <Grid gutter="xs">
-                          {!loading &&  <PhotoCollage images={ Object.values(projectImages[ImageDirectory.moodBoard])}/>}
-                        </Grid>
-                    </div>
+            <Space h={'xl'}/>
+
+            {!loading && props.data.moodBoard && <Image src={projectImages[ImageDirectory.moodBoard][Banner.moodBoard] ?? ''}/>}
+            {!loading && projectImages[ImageDirectory.typography] &&
+                <Stack justify="center" gap={0}>
+                    <Image src={projectImages[ImageDirectory.typography]['typography.png']?? ''}/>
                 </Stack>
+            }
+            { props.data.moodBoard &&
+                <div>
+                    {
+                        props.data.moodBoard?.moodBoardDescription &&
+                        <Group justify='centre' gap='xs' grow wrap="nowrap" className='mood-board' align='none'>
+                            <Container fluid w='4rem' styles={{root: {paddingInline: 0}}}>
+                                <Title size='md'>Mood Board</Title>
+                                <Text>{props.data?.moodBoard.moodBoardDescription}</Text>
+                            </Container>
+                            <Container styles={{root: {paddingInline: 0}}}>
+                                <Grid
+                                    styles={{
+                                        inner: {
+                                        alignItems: 'center',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        },
+                                    }}
+                                    grow
+                                    gutter="xs"
+                                >
+                                </Grid>
+                            </Container>
+                            {!loading && projectImages[ImageDirectory.moodBoard] && <PhotoCollage images={Object.values(projectImages[ImageDirectory.moodBoard])}/>}
+                        </Group>
+                    }
+                    {
+                        !props.data?.moodBoard?.moodBoardDescription &&
+                        <Stack justify='centre' gap='xs'>
+                            <div>
+                                <Text>{props.data?.moodBoard.moodBoardDescription}</Text>
+                            </div>
+                            <Space/>
+                            <div>
+                                <Grid gutter="xs">
+                                {!loading && props.data.moodBoard && <Image src={projectImages[ImageDirectory.moodBoard][Banner.moodBoard] ?? ''}/>}
+                                </Grid>
+                            </div>
+                        </Stack>
+                    }
+                </div>
             }
             {props.data.colourPalette && <ColourPalette colours={props.data.colourPalette}/>}
             {!loading && <Image src={projectImages[ImageDirectory.banners][Banner.logo]}/>}
@@ -186,19 +213,24 @@ const ProjectPage: React.FC<data>  = (props): React.ReactElement => {
                         </Grid.Col>))
                     }
                 </Grid>
-                <Text mt={10} mb={10}>{props.data.logoExplanation}</Text>
+                {props.data.logoExplanation && <Text mt={10} mb={10}>{props.data.logoExplanation}</Text>}
             </Stack>
+            { !loading && projectImages[ImageDirectory.banners][Banner.subLogo] &&
+                <div className="scroll-container">
+                    <div className="scroll-content">
+                        {!loading && <InfiniteScrollImage image={projectImages[ImageDirectory.banners][Banner.subLogo]}/>}
+                    </div>
+                </div>
+            }
             {projectImages[ImageDirectory.heroShots] &&
                 <Stack className='hero-shots' justify='centre' gap='0'>
-                    <div>
-                        <Stack gap='0'>
-                            {
-                                Object.values(projectImages[ImageDirectory.heroShots]).map((imgPath, index) =>
-                                    <Image src={imgPath} key={index}/>
-                                )
-                            }
-                        </Stack>
-                    </div>
+                    <Stack gap='0'>
+                        {
+                            Object.values(projectImages[ImageDirectory.heroShots]).sort().map((imgPath, index) =>
+                                <Image src={imgPath} key={index}/>
+                            )
+                        }
+                    </Stack>
                 </Stack>
             }
             </div>
